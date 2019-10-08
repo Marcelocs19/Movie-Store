@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,17 +17,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.moviestore.model.pk.UserMoviePK;
 
 @Entity
-@Table(name = "rent")
-public class Rent implements Serializable{
+@Table(name = "user_movie")
+public class UserMovie implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@EmbeddedId
-	private UserMoviePK id;
+	private UserMoviePK user_movie_id;
 	
 	private boolean returned;
 	
-    @Column(name = "date_read") 
+    @Column(name = "date_rented", nullable = false) 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date_rented = LocalDateTime.now();
@@ -34,33 +41,33 @@ public class Rent implements Serializable{
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date_returned;
 
-	public Rent() {
+	public UserMovie() {
 		super();
 	}
 
-	public Rent(User user, Movie movie, boolean returned, LocalDateTime date_rented, LocalDateTime date_returned) {
+	public UserMovie(User user, Movie movie, boolean returned, LocalDateTime date_rented, LocalDateTime date_returned) {
 		super();
-		id.setUser(user);
-		id.setMovie(movie);
+		user_movie_id.setUser(user);
+		user_movie_id.setMovie(movie);
 		this.returned = returned;
 		this.date_rented = date_rented;
 		this.date_returned = date_returned;
 	}
 	
 	public User getUser() {
-		return id.getUser();
+		return user_movie_id.getUser();
 	}
 	
 	public void setUser(User user) {
-		id.setUser(user);
+		user_movie_id.setUser(user);
 	}
 	
 	public Movie getMovie() {
-		return id.getMovie();
+		return user_movie_id.getMovie();
 	}
 	
 	public void setMovie(Movie movie) {
-		id.setMovie(movie);
+		user_movie_id.setMovie(movie);
 	}
 
 	public boolean isReturned() {
@@ -91,7 +98,7 @@ public class Rent implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((user_movie_id == null) ? 0 : user_movie_id.hashCode());
 		return result;
 	}
 
@@ -103,11 +110,11 @@ public class Rent implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Rent other = (Rent) obj;
-		if (id == null) {
-			if (other.id != null)
+		UserMovie other = (UserMovie) obj;
+		if (user_movie_id == null) {
+			if (other.user_movie_id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!user_movie_id.equals(other.user_movie_id))
 			return false;
 		return true;
 	}
