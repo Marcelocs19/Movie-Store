@@ -1,24 +1,33 @@
 package com.moviestore.service;
 
-import java.util.List;
+import java.util.Collection;
 
-import com.moviestore.controller.dto.MovieDto;
 import com.moviestore.model.Movie;
 import com.moviestore.repository.MovieRepository;
+import com.moviestore.repository.UserMovieRepository;
 
 public class MovieService {
 	
 	private final MovieRepository movieRepository;
+	private final UserMovieRepository userMovieRepository;
 	
-	public MovieService(MovieRepository movieRepository) {
+	public MovieService(MovieRepository movieRepository, UserMovieRepository userMovieRepository) {
 		this.movieRepository = movieRepository;
+		this.userMovieRepository = userMovieRepository;
 	}
 	
-//	public List<MovieDto> listAvailableMovie(){
-//		try {
-//			List<Movie> listMovies = movieRepository.findAll();
-//		} catch (Exception e) {
-//		}
-//	}
+	public Collection<Movie> listAvailableMovie(){
+		try {
+			Collection<Movie> listMovies = userMovieRepository.findByReturned(true);
+			if(!listMovies.isEmpty()) {
+				return listMovies;
+			}else {
+				return null;
+			}
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 }

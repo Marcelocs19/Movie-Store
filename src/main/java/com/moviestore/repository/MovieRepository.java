@@ -7,4 +7,6 @@ import com.moviestore.model.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 
+	
+	
 }

@@ -1,11 +1,16 @@
 package com.moviestore.controller;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moviestore.controller.dto.MovieDto;
+import com.moviestore.model.Movie;
 import com.moviestore.service.MovieService;
 
 @RestController
@@ -18,17 +23,11 @@ public class MovieController {
 		this.movieService = movieService;
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<MovieDto> listAvailableMovies(){
-//		try {
-//			
-//		} catch (Exception e) {
-//		}
-//		Collection<Owner> owners = this.clinicService.findAllOwners();
-//		if (owners.isEmpty()) {
-//			return new ResponseEntity<Collection<Owner>>(HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<Collection<Owner>>(owners, HttpStatus.OK);
-//	}
+	@GetMapping
+	public ResponseEntity<MovieDto> listAvailableMovies(){
+		Collection<Movie> list = this.movieService.listAvailableMovie();
+		List<MovieDto> movieDto = MovieDto.convert(list);			
+		return new ResponseEntity<MovieDto>(HttpStatus.OK);
+	}
 	
 }
