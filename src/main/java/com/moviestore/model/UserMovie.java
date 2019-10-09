@@ -14,18 +14,18 @@ import com.moviestore.model.pk.UserMoviePK;
 @Entity
 @Table(name = "user_movie")
 public class UserMovie implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@EmbeddedId
 	private UserMoviePK user_movie_id;
-	
+
 	private boolean returned;
-	
+
 	public UserMovie() {
 		super();
 	}
@@ -36,19 +36,19 @@ public class UserMovie implements Serializable {
 		user_movie_id.setMovie(movie);
 		this.returned = returned;
 	}
-	
+
 	public User getUser() {
 		return user_movie_id.getUser();
 	}
-	
+
 	public void setUser(User user) {
 		user_movie_id.setUser(user);
 	}
-	
+
 	public Movie getMovie() {
 		return user_movie_id.getMovie();
 	}
-	
+
 	public void setMovie(Movie movie) {
 		user_movie_id.setMovie(movie);
 	}
@@ -60,7 +60,7 @@ public class UserMovie implements Serializable {
 	public void setReturned(boolean returned) {
 		this.returned = returned;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,12 +79,13 @@ public class UserMovie implements Serializable {
 			return false;
 		UserMovie other = (UserMovie) obj;
 		if (user_movie_id == null) {
-			if (other.user_movie_id != null)
+			if (other.user_movie_id != null) {
 				return false;
-		} else if (!user_movie_id.equals(other.user_movie_id))
+			}
+		} else if (!user_movie_id.equals(other.user_movie_id)) {
 			return false;
+		}
 		return true;
 	}
-     
-		
+
 }
