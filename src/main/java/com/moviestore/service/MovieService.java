@@ -15,19 +15,6 @@ public class MovieService {
 		this.movieRepository = movieRepository;
 		this.userMovieRepository = userMovieRepository;
 	}
-	
-	public Collection<Movie> listAvailableMovie(){
-		try {
-			Collection<Movie> listMovies = userMovieRepository.findByReturned(true);
-			if(!listMovies.isEmpty()) {
-				return listMovies;
-			}else {
-				return null;
-			}
-			
-		} catch (Exception e) {
-			return null;
-		}
-	}
+
 
 }

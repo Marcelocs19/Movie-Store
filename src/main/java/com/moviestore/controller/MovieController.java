@@ -13,8 +13,8 @@ import com.moviestore.controller.dto.MovieDto;
 import com.moviestore.model.Movie;
 import com.moviestore.service.MovieService;
 
-@RestController
-@RequestMapping("/movies")
+//@RestController
+//@RequestMapping("/movies")
 public class MovieController {
 
 	private final MovieService movieService;
@@ -22,12 +22,12 @@ public class MovieController {
 	public MovieController(MovieService movieService) {
 		this.movieService = movieService;
 	}
-	
-	@GetMapping
-	public ResponseEntity<MovieDto> listAvailableMovies(){
-		Collection<Movie> list = this.movieService.listAvailableMovie();
-		List<MovieDto> movieDto = MovieDto.convert(list);			
-		return new ResponseEntity<MovieDto>(HttpStatus.OK);
-	}
+//	
+//	@GetMapping
+//	public ResponseEntity<MovieDto> listAvailableMovies(){
+//		Collection<Movie> list = this.movieService.listAvailableMovie();
+//		List<MovieDto> movieDto = MovieDto.convert(list);			
+//		return new ResponseEntity<MovieDto>(HttpStatus.OK);
+//	}
 	
 }

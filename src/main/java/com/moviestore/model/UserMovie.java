@@ -2,7 +2,7 @@ package com.moviestore.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +21,7 @@ public class UserMovie implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@EmbeddedId
+	@Embedded
 	private UserMoviePK user_movie_id;
 
 	private boolean returned;
