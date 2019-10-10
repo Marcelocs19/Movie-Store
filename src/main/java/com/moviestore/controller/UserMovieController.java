@@ -30,8 +30,7 @@ public class UserMovieController {
 			List<UserMovieDto> listAvailableMovies = UserMovieDto.convert(userMovieService.listAvailableMovie());
 			if(listAvailableMovies.isEmpty()) {
 				return new ResponseEntity<List<UserMovieDto>>(HttpStatus.NOT_FOUND);
-			}
-			
+			}			
 			return new ResponseEntity<List<UserMovieDto>>(listAvailableMovies, HttpStatus.OK);			
 			
 		} catch (Exception e) {
