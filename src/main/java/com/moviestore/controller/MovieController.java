@@ -40,6 +40,7 @@ public class MovieController {
 
 	}
 	
+	
 	@GetMapping("/search")
 	@ResponseBody
 	public ResponseEntity<List<MovieDto>> searchMovies(@RequestParam("title") String title) throws Exception {

@@ -9,24 +9,38 @@ import com.moviestore.model.Rent;
 public class MovieDto {
 
 	private Long id;
-	private String name;
+	private String title;
+	private int totalAmount;
+	private String director;
+	
 
 	public MovieDto(Movie movie) {
 		this.id = movie.getId();
-		this.name = movie.getTitle();
+		this.title = movie.getTitle();
+		this.totalAmount = movie.getCurrentQuantity();
+		this.director = movie.getDirector_name();
 	}
 
 	public MovieDto(Rent rent) {
 		this.id = rent.getMovies().getId();
-		this.name = rent.getMovies().getTitle();
+		this.title = rent.getMovies().getTitle();
 	}
-
+			
 	public Long getId() {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
+	}
+		
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+	
+	
+	public String getDirector() {
+		return director;
 	}
 
 	public static List<MovieDto> convertMoviesToDto(List<Movie> listMovies) {

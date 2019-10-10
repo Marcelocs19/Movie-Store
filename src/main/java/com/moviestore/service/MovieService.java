@@ -25,7 +25,9 @@ public class MovieService {
 
 	public List<MovieDto> listAllAvailableMovies(){
 		try {
-			List<MovieDto> listAllavailableMovies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));			
+			System.out.println("AQUI");
+			List<MovieDto> listAllavailableMovies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
+			System.out.println(listAllavailableMovies.toString());
 			if(!listAllavailableMovies.isEmpty()) {
 				return listAllavailableMovies;
 			} else {
@@ -48,6 +50,8 @@ public class MovieService {
 		} catch (Exception e) {
 			throw new ServiceException(ERROR_SEARCH_MOVIES,e);
 		}
-	} 
+	}
+	
+	
 
 }

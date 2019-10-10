@@ -30,11 +30,14 @@ public class Rent implements Serializable {
 	private Movie movies;
 
 	private boolean returned;
-
-	public Rent() {
+	
+	public Rent(User user, @NotNull(message = "At least one movie required.") Movie movies, boolean returned) {
 		super();
+		this.user = user;
+		this.movies = movies;
+		this.returned = returned;
 	}
-		
+
 	public User getUser() {
 		return user;
 	}

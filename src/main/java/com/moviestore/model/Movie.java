@@ -1,11 +1,7 @@
 package com.moviestore.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -28,29 +24,30 @@ public class Movie extends BaseEntity {
 	@Column(name = "current_quantity", nullable = false)
 	private int currentQuantity;
    
-	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-	private Set<Director> diretor;
-			
+	@NotBlank(message = "Required name of director field.")
+	@Column(name = "director_name", length = 100, nullable = false)
+	private String director_name;
+	
+				
 	public Movie() {
 		super();
 	}
 
 	public Movie(@NotBlank(message = "Required title field.") String title, @Min(0) int totalAmount,
-			@Min(0) int currentQuantity, Set<Director> diretor) {
+			@Min(0) int currentQuantity, @NotBlank(message = "Required title field.") String director_name) {
 		super();
 		this.title = title;
 		this.totalAmount = totalAmount;
 		this.currentQuantity = currentQuantity;
-		this.diretor = diretor;
+		this.director_name = director_name;
 	}
 
-		
-	public Set<Director> getDiretor() {
-		return diretor;
+	public String getDirector_name() {
+		return director_name;
 	}
 
-	public void setDiretor(Set<Director> diretor) {
-		this.diretor = diretor;
+	public void setdirector_name(String director_name) {
+		this.director_name = director_name;
 	}
 
 	public String getTitle() {
@@ -80,9 +77,7 @@ public class Movie extends BaseEntity {
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
-				+ ", diretor=" + diretor + "]";
+				+ ", director_name=" + director_name + "]";
 	}	
-
-	
 	
 }
