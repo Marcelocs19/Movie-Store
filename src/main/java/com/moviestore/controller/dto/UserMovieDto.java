@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import com.moviestore.model.UserMovie;
 
 public class UserMovieDto {
-
 	
 	private String name;
 	private int currentQuantity;
@@ -24,8 +23,8 @@ public class UserMovieDto {
 		return currentQuantity;
 	}	
 
-	public static List<UserMovieDto> convert(List<UserMovie> listMovies) {
-		return listMovies.stream().map(UserMovieDto::new).collect(Collectors.toList());
+	public static List<UserMovieDto> convert(List<UserMovie> listUserMovies) {
+		return listUserMovies.stream().map(UserMovieDto::new).collect(Collectors.toList());
 	}
 	
 }

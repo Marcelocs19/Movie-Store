@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.moviestore.model.Movie;
+import com.moviestore.controller.dto.MovieDto;
 import com.moviestore.service.MovieService;
 
 @RestController
@@ -25,13 +25,13 @@ public class MovieController {
 	
 	@GetMapping
 	@ResponseBody
-	public ResponseEntity<List<Movie>> searchMovies(String name) throws Exception {
+	public ResponseEntity<List<MovieDto>> searchMovies(String name) throws Exception {
 		try {
-			List<Movie> listAvailableMovies = movieService.searchMovie(name);
+			List<MovieDto> listAvailableMovies = MovieDto.convert(movieService.searchMovie(name));
 			if(listAvailableMovies.isEmpty()) {
-				return new ResponseEntity<List<Movie>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<List<MovieDto>>(HttpStatus.NOT_FOUND);
 			}			
-			return new ResponseEntity<List<Movie>>(listAvailableMovies, HttpStatus.OK);			
+			return new ResponseEntity<List<MovieDto>>(listAvailableMovies, HttpStatus.OK);			
 			
 		} catch (Exception e) {
 			throw new Exception("Error");
