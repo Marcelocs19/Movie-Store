@@ -10,4 +10,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
 
 	List<Movie> findByTitle(String title);
 	
+	List<Movie> findByCurrentQuantityGreaterThan(int quantity);
+	
 }
