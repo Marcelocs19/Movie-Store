@@ -1,8 +1,5 @@
 package com.moviestore.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,9 +21,9 @@ public class UserMovieService {
 		this.userMovieRepository = userMovieRepository;
 	}
 
-	public Collection<UserMovie> listAvailableMovie() {
+	public List<UserMovie> listAvailableMovie() {
 		try {
-			Collection<UserMovie> available = userMovieRepository.findByReturned(true);
+			List<UserMovie> available = userMovieRepository.findByReturned(false);
 			if (!available.isEmpty()) {
 				return available;
 			} else {

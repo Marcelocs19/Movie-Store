@@ -1,6 +1,6 @@
 package com.moviestore.controller;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.moviestore.model.UserMovie;
+import com.moviestore.controller.dto.UserMovieDto;
 import com.moviestore.service.UserMovieService;
 
 @RestController
@@ -25,13 +25,14 @@ public class UserMovieController {
 
 	@GetMapping
 	@ResponseBody
-	public ResponseEntity<Collection<UserMovie>> listAvailableMovies() throws Exception {
+	public ResponseEntity<List<UserMovieDto>> listAvailableMovies() throws Exception {
 		try {
-			Collection<UserMovie> listAvailableMovies = userMovieService.listAvailableMovie();
+			List<UserMovieDto> listAvailableMovies = UserMovieDto.convert(userMovieService.listAvailableMovie());
 			if(listAvailableMovies.isEmpty()) {
-				return new ResponseEntity<Collection<UserMovie>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<List<UserMovieDto>>(HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<Collection<UserMovie>>(listAvailableMovies, HttpStatus.OK);			
+			
+			return new ResponseEntity<List<UserMovieDto>>(listAvailableMovies, HttpStatus.OK);			
 			
 		} catch (Exception e) {
 			throw new Exception("Error");
