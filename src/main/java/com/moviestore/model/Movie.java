@@ -16,9 +16,9 @@ public class Movie extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "Required name field.")
-	@Column(name = "name", length = 100, nullable = false)
-	private String name;
+	@NotBlank(message = "Required title field.")
+	@Column(name = "title", length = 100, nullable = false)
+	private String title;
 	
 	@Min(0)
 	@Column(name = "total_amount", nullable = false)
@@ -35,10 +35,10 @@ public class Movie extends BaseEntity {
 		super();
 	}
 
-	public Movie(@NotBlank(message = "Required name field.") String name, @Min(0) int totalAmount,
+	public Movie(@NotBlank(message = "Required title field.") String title, @Min(0) int totalAmount,
 			@Min(0) int currentQuantity, Set<Director> diretor) {
 		super();
-		this.name = name;
+		this.title = title;
 		this.totalAmount = totalAmount;
 		this.currentQuantity = currentQuantity;
 		this.diretor = diretor;
@@ -53,12 +53,12 @@ public class Movie extends BaseEntity {
 		this.diretor = diretor;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getTotalAmount() {
@@ -79,7 +79,7 @@ public class Movie extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Movie [name=" + name + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
+		return "Movie [title=" + title + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
 				+ ", diretor=" + diretor + "]";
 	}	
 

@@ -11,7 +11,7 @@ public class UserMovieDto {
 	private int currentQuantity;
 	
 	public UserMovieDto(UserMovie userMovie) {
-		this.name = userMovie.getMovie().getName();
+		this.name = userMovie.getMovie().getTitle();
 		this.currentQuantity = userMovie.getMovie().getCurrentQuantity();
 	}
 
