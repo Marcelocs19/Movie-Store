@@ -42,5 +42,12 @@ public class Director extends BaseEntity {
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
+
+	@Override
+	public String toString() {
+		return "Director [name=" + name + ", movie=" + movie + "]";
+	}
+	
+	
         
 }

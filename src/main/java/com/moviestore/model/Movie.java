@@ -75,6 +75,14 @@ public class Movie extends BaseEntity {
 
 	public void setCurrentQuantity(int currentQuantity) {
 		this.currentQuantity = currentQuantity;
+	}
+
+	@Override
+	public String toString() {
+		return "Movie [name=" + name + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
+				+ ", diretor=" + diretor + "]";
 	}	
 
+	
+	
 }
