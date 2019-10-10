@@ -30,7 +30,11 @@ public class Movie extends BaseEntity {
    
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
 	private Set<Director> diretor;
-	
+			
+	public Movie() {
+		super();
+	}
+
 	public Movie(@NotBlank(message = "Required name field.") String name, @Min(0) int totalAmount,
 			@Min(0) int currentQuantity, Set<Director> diretor) {
 		super();
