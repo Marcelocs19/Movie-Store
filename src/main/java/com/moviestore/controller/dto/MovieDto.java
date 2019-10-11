@@ -10,14 +10,14 @@ public class MovieDto {
 
 	private Long id;
 	private String title;
-	private int totalAmount;
+	private int currentQuantity;
 	private String director;
 	
 
 	public MovieDto(Movie movie) {
 		this.id = movie.getId();
 		this.title = movie.getTitle();
-		this.totalAmount = movie.getCurrentQuantity();
+		this.currentQuantity = movie.getCurrentQuantity();
 		this.director = movie.getDirector_name();
 	}
 
@@ -34,8 +34,8 @@ public class MovieDto {
 		return title;
 	}
 		
-	public int getTotalAmount() {
-		return totalAmount;
+	public int getCurrentQuantity() {
+		return currentQuantity;
 	}
 	
 	
