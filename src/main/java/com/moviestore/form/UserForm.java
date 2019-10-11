@@ -12,6 +12,17 @@ public class UserForm {
 	
 	@NotBlank(message = "Required e-mail field.")
 	private String password;
+	
+	@NotBlank(message = "Required e-mail field.")
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getEmail() {
 		return email;
