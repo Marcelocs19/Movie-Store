@@ -25,6 +25,7 @@ public class MovieController {
 
 	private static final String SEARCH = "/search";
 	private static final String RENTMOVIE = "/{id}/rent";
+	private static final String RETURNMOVIE = "/{id}/return";
 	
 	private final MovieService movieService;
 	
@@ -81,6 +82,20 @@ public class MovieController {
 
 	}
 
+	@PutMapping(RETURNMOVIE)
+	@Transactional
+	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable Long id, @RequestBody UserForm userForm) throws Exception {
+		try {
+			List<MovieDto> returnMovie = movieService.returnMovie(id,userForm);
+			if (!returnMovie.isEmpty()) {
+				return ResponseEntity.ok(returnMovie);
+			}			
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			throw new Exception("Error");
+		}
+
+	}
 	
 	
 	
