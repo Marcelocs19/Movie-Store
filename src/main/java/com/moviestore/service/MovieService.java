@@ -65,11 +65,13 @@ public class MovieService {
 	public List<MovieDto> rentMovie(Long id, UserForm userForm) {
 		try {
 			Movie movie = movieRepository.getOne(id);
-			if(movie.getCurrentQuantity() > 0) {
+			if(movie.getCurrentQuantity() == 0) {
+				movie.setAvailable(false);
+			}else {
 				movie.setCurrentQuantity(movie.getCurrentQuantity() - 1);
 				User user = userRepository.findByEmail(userForm.getEmail());
-				Rent rent = new Rent(user,movie,true);
-				rentRepository.saveAndFlush(rent);
+				Rent rent = new Rent(user,movie);
+				rentRepository.saveAndFlush(rent);				
 			}
 			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
 			if (!movies.isEmpty()) {
@@ -87,8 +89,11 @@ public class MovieService {
 			Movie movie = movieRepository.getOne(id);
 			if(movie.getCurrentQuantity() < movie.getTotalAmount()) {
 				movie.setCurrentQuantity(movie.getCurrentQuantity() + 1);
+				if(movie.getCurrentQuantity() == 1) {
+					movie.setAvailable(true);
+				}
 				User user = userRepository.findByEmail(userForm.getEmail());
-				Rent rent = new Rent(user,movie,true);
+				Rent rent = new Rent(user,movie);
 				rentRepository.saveAndFlush(rent);
 			}
 			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
