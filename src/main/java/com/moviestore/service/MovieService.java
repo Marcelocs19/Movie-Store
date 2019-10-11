@@ -69,7 +69,7 @@ public class MovieService {
 				movie.setCurrentQuantity(movie.getCurrentQuantity() - 1);
 				User user = userRepository.findByEmail(userForm.getEmail());
 				Rent rent = new Rent(user,movie,true);
-				rentRepository.save(rent);
+				rentRepository.saveAndFlush(rent);
 			}
 			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
 			if (!movies.isEmpty()) {
@@ -89,7 +89,7 @@ public class MovieService {
 				movie.setCurrentQuantity(movie.getCurrentQuantity() + 1);
 				User user = userRepository.findByEmail(userForm.getEmail());
 				Rent rent = new Rent(user,movie,true);
-				rentRepository.save(rent);
+				rentRepository.saveAndFlush(rent);
 			}
 			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
 			if (!movies.isEmpty()) {

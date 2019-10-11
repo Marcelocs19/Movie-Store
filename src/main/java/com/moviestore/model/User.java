@@ -39,7 +39,15 @@ public class User {//implements GrantedAuthority {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Rent> rented;
 
-	
+	public User(@NotBlank(message = "Required name field.") String name,
+			@NotBlank(message = "Required e-mail field.") @Email String email,
+			@NotBlank(message = "Required password field.") String password) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
 	public Long getId() {
 		return id;
 	}
