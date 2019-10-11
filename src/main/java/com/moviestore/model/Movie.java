@@ -1,11 +1,7 @@
 package com.moviestore.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -16,9 +12,9 @@ public class Movie extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "Required name field.")
-	@Column(name = "name", length = 100, nullable = false)
-	private String name;
+	@NotBlank(message = "Required title field.")
+	@Column(name = "title", length = 100, nullable = false)
+	private String title;
 	
 	@Min(0)
 	@Column(name = "total_amount", nullable = false)
@@ -28,37 +24,38 @@ public class Movie extends BaseEntity {
 	@Column(name = "current_quantity", nullable = false)
 	private int currentQuantity;
    
-	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-	private Set<Director> diretor;
-			
+	@NotBlank(message = "Required name of director field.")
+	@Column(name = "director_name", length = 100, nullable = false)
+	private String director_name;
+	
+				
 	public Movie() {
 		super();
 	}
 
-	public Movie(@NotBlank(message = "Required name field.") String name, @Min(0) int totalAmount,
-			@Min(0) int currentQuantity, Set<Director> diretor) {
+	public Movie(@NotBlank(message = "Required title field.") String title, @Min(0) int totalAmount,
+			@Min(0) int currentQuantity, @NotBlank(message = "Required title field.") String director_name) {
 		super();
-		this.name = name;
+		this.title = title;
 		this.totalAmount = totalAmount;
 		this.currentQuantity = currentQuantity;
-		this.diretor = diretor;
+		this.director_name = director_name;
 	}
 
-		
-	public Set<Director> getDiretor() {
-		return diretor;
+	public String getDirector_name() {
+		return director_name;
 	}
 
-	public void setDiretor(Set<Director> diretor) {
-		this.diretor = diretor;
+	public void setdirector_name(String director_name) {
+		this.director_name = director_name;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getTotalAmount() {
@@ -79,10 +76,8 @@ public class Movie extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Movie [name=" + name + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
-				+ ", diretor=" + diretor + "]";
+		return "Movie [title=" + title + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
+				+ ", director_name=" + director_name + "]";
 	}	
-
-	
 	
 }

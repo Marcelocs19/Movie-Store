@@ -8,6 +8,8 @@ import com.moviestore.model.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 
-	List<Movie> findByName(String name);
+	List<Movie> findByTitle(String title);
+	
+	List<Movie> findByCurrentQuantityGreaterThan(int quantity);
 	
 }
