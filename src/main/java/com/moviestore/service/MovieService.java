@@ -10,6 +10,7 @@ import com.moviestore.error.ServiceException;
 import com.moviestore.form.UserForm;
 import com.moviestore.model.Movie;
 import com.moviestore.model.Rent;
+import com.moviestore.model.Status;
 import com.moviestore.model.User;
 import com.moviestore.repository.MovieRepository;
 import com.moviestore.repository.RentRepository;
@@ -67,7 +68,7 @@ public class MovieService {
 			}else {
 				movie.setCurrentQuantity(movie.getCurrentQuantity() - 1);
 				User user = userRepository.findByEmail(userForm.getEmail());
-				Rent rent = new Rent(user,movie);
+				Rent rent = new Rent(user,movie,Status.RENTED);
 				rentRepository.saveAndFlush(rent);				
 			}
 			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
@@ -90,7 +91,7 @@ public class MovieService {
 					movie.setAvailable(true);
 				}
 				User user = userRepository.findByEmail(userForm.getEmail());
-				Rent rent = new Rent(user,movie);
+				Rent rent = new Rent(user,movie,Status.RETURNED);
 				rentRepository.saveAndFlush(rent);
 			}
 			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));

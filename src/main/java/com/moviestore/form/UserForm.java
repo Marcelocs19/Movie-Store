@@ -4,7 +4,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class UserForm {
-
 		
 	@NotBlank(message = "Required e-mail field.")
 	@Email
@@ -13,16 +12,6 @@ public class UserForm {
 	@NotBlank(message = "Required e-mail field.")
 	private String password;
 	
-	@NotBlank(message = "Required e-mail field.")
-	private String name;
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getEmail() {
 		return email;
@@ -39,5 +28,5 @@ public class UserForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-		
+	
 }

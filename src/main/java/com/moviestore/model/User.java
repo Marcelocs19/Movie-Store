@@ -29,7 +29,7 @@ public class User {//implements GrantedAuthority {
 	
 	@NotBlank(message = "Required e-mail field.")
 	@Column(name = "email", nullable = false, unique = true)
-	//@Email(message = "Email should be valid",regexp = "@.+")
+	@Email(message = "Email should be valid")
 	private String email;
 	
 	@NotBlank(message = "Required password field.")

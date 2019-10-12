@@ -1,11 +1,8 @@
 package com.moviestore.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,14 +10,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "rent")
-public class Rent implements Serializable {
+public class Rent extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "user",nullable = false)
 	private User user;
@@ -29,14 +22,20 @@ public class Rent implements Serializable {
 	@NotNull(message = "At least one movie required.")
 	private Movie movies;
 
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	//private LocalDateTime date = LocalDateTime.now();
+	
 	public Rent() {
 		
-	}
-	
-	public Rent(User user, @NotNull(message = "At least one movie required.") Movie movies) {
+	}	
+
+	public Rent(User user, @NotNull(message = "At least one movie required.") Movie movies, Status status) {
 		super();
 		this.user = user;
 		this.movies = movies;
+		this.status = status;
 	}
 
 	public User getUser() {
@@ -55,5 +54,12 @@ public class Rent implements Serializable {
 		this.movies = movie;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
 
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
 }
