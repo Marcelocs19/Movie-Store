@@ -85,7 +85,7 @@ public class Movie extends BaseEntity {
 	public void setDirector_name(String director_name) {
 		this.director_name = director_name;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity

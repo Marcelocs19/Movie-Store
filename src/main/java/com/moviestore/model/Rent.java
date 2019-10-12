@@ -29,7 +29,9 @@ public class Rent implements Serializable {
 	@NotNull(message = "At least one movie required.")
 	private Movie movies;
 
-
+	public Rent() {
+		
+	}
 	
 	public Rent(User user, @NotNull(message = "At least one movie required.") Movie movies) {
 		super();

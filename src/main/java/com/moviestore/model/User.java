@@ -29,7 +29,7 @@ public class User {//implements GrantedAuthority {
 	
 	@NotBlank(message = "Required e-mail field.")
 	@Column(name = "email", nullable = false, unique = true)
-	@Email
+	//@Email(message = "Email should be valid",regexp = "@.+")
 	private String email;
 	
 	@NotBlank(message = "Required password field.")
@@ -38,11 +38,25 @@ public class User {//implements GrantedAuthority {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Rent> rented;
+	
+	public User() {
+		
+	}
 
 	public User(@NotBlank(message = "Required name field.") String name,
 			@NotBlank(message = "Required e-mail field.") @Email String email,
 			@NotBlank(message = "Required password field.") String password) {
 		super();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
+	public User(Long id, @NotBlank(message = "Required name field.") String name,
+			@NotBlank(message = "Required e-mail field.") String email,
+			@NotBlank(message = "Required password field.") String password) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;

@@ -2,6 +2,7 @@ package com.moviestore.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.moviestore.controller.dto.MovieDto;
@@ -21,19 +22,15 @@ public class MovieService {
 	private static final String ERROR_LIST_MOVIES = "Error listing movies.";
 	private static final String ERROR_SEARCH_MOVIES = "Error search movies.";
 	private static final String ERROR_MOVIES_NOT_FOUND = "No movies found.";
+		
+	@Autowired
+	private MovieRepository movieRepository;
 	
+	@Autowired
+	private RentRepository rentRepository;
 	
-	
-	private final MovieRepository movieRepository;
-	private final RentRepository rentRepository;
-	private final UserRepository userRepository;
-
-	public MovieService(MovieRepository movieRepository,RentRepository rentRepository,UserRepository userRepository) {
-		super();
-		this.movieRepository = movieRepository;
-		this.rentRepository = rentRepository;
-		this.userRepository = userRepository;
-	}
+	@Autowired
+	private UserRepository userRepository;
 
 	public List<MovieDto> listAllAvailableMovies(){
 		try {
