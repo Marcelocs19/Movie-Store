@@ -1,5 +1,6 @@
 package com.moviestore.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class MovieService {
 	public List<MovieDto> listAllAvailableMovies() {
 		try {
 			List<MovieDto> listAllavailableMovies = MovieDto
-					.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
+					.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(0));
 			if (!listAllavailableMovies.isEmpty()) {
 				return listAllavailableMovies;
 			} else {
@@ -65,21 +66,22 @@ public class MovieService {
 
 	public List<MovieDto> rentMovie(Long id, UserForm userForm) {
 		try {
-			Movie movie = movieRepository.getOne(id);
-			if (movie.getCurrentQuantity() == 0) {
-				movie.setAvailable(false);
-			} else {
-				movie.setCurrentQuantity(movie.getCurrentQuantity() - 1);
-				User user = userRepository.findByEmail(userForm.getEmail());
-				Rent rent = new Rent(user, movie, Status.RENTED);
-				List<Rent> listUserRent = user.getRented();
-				listUserRent.add(rent);
-				user.setRented(listUserRent);
-				rentRepository.saveAndFlush(rent);
-			}
-			List<MovieDto> movies = MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
-			if (!movies.isEmpty()) {
-				return movies;
+			Optional<Movie> movie = movieRepository.findById(id);
+			if (movie.isPresent()) {
+				if (movie.get().getCurrentQuantity() == 0) {
+					movie.get().setAvailable(false);
+				} else {
+					User user = userRepository.findByEmail(userForm.getEmail());
+					List<Rent> listRent = rentRepository.findByMovie_idAndStatusAndUser_Email(id, Status.RENTED,
+							user.getEmail());
+					if (listRent.isEmpty()) {
+						movie.get().setCurrentQuantity(movie.get().getCurrentQuantity() - 1);
+						Rent rent = new Rent(user, movie.get(), Status.RENTED);
+						rentRepository.saveAndFlush(rent);
+					}
+
+				}
+				return MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(0));
 			} else {
 				throw new ServiceException(ERROR_MOVIES_NOT_FOUND);
 			}
@@ -90,28 +92,28 @@ public class MovieService {
 
 	public List<MovieDto> returnMovie(Long id, UserForm userForm) {
 		try {
-			Optional<Rent> listRent = rentRepository.findById(id);
-//			User user = userRepository.findByEmail(userForm.getEmail());
-//			user.getRented().contains(listRent.get());
-			if (listRent.isPresent()) {
-				if (listRent.get().getUser().getEmail().equals(userForm.getEmail())) {
-					Movie movie = listRent.get().getMovie();
-					if (movie.getCurrentQuantity() < movie.getTotalAmount()) {
-						movie.setCurrentQuantity(movie.getCurrentQuantity() + 1);
-						if (movie.getCurrentQuantity() == 1) {
-							movie.setAvailable(true);
-						}
-						Rent rent = new Rent(listRent.get().getUser(), listRent.get().getMovie(), Status.RETURNED);
-						rentRepository.saveAndFlush(rent);
-					}					
+			Optional<Rent> rent = rentRepository.findById(id);
+			Optional<Movie> movie = movieRepository.findById(rent.get().getMovie().getId()); 
+			User user = userRepository.findByEmail(userForm.getEmail());
+			if (rent.isPresent() && movie.isPresent()) {
+				if (rent.get().getUser().getId() == user.getId()) {
+					if (movie.get().getCurrentQuantity() < movie.get().getTotalAmount()) {
+						rent.get().setDate_return(LocalDateTime.now());
+						rent.get().setStatus(Status.RETURNED);
+						movie.get().setAvailable(true);
+						movie.get().setCurrentQuantity(movie.get().getCurrentQuantity() + 1);
+					}
+				} else {
+					return MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(0));
 				}
-				return MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(1));
+				return MovieDto.convertMoviesToDto(movieRepository.findByCurrentQuantityGreaterThan(0));
 			} else {
-				throw new ServiceException(ERROR_MOVIES_NOT_FOUND);
+				throw new ServiceException(ERROR_RETURN_MOVIES);
 			}
 		} catch (Exception e) {
-			throw new ServiceException(ERROR_RETURN_MOVIES, e);
+			throw new ServiceException(ERROR_RENT_MOVIES, e);
 		}
 	}
+
 
 }

@@ -35,7 +35,7 @@ public class User {//implements GrantedAuthority {
 	@NotBlank(message = "Required password field.")
 	@Column(name = "password", nullable = false)
 	private String password;
-	
+		
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Rent> rented;
 	
@@ -51,7 +51,7 @@ public class User {//implements GrantedAuthority {
 		this.email = email;
 		this.password = password;
 	}
-	
+		
 	public Long getId() {
 		return id;
 	}
@@ -92,6 +92,6 @@ public class User {//implements GrantedAuthority {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
 	}
-
+	
 	
 }
