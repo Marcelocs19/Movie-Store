@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moviestore.controller.dto.MovieDto;
-import com.moviestore.form.UserForm;
+import com.moviestore.controller.form.UserForm;
 import com.moviestore.service.RentService;
 
 @RestController

@@ -1,7 +1,9 @@
-package com.moviestore.form;
+package com.moviestore.controller.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class LoginForm {
 
@@ -26,6 +28,10 @@ public class LoginForm {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public UsernamePasswordAuthenticationToken convert() {
+		return new UsernamePasswordAuthenticationToken(email,password);
 	}
 	
 }

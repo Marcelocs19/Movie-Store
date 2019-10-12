@@ -2,8 +2,8 @@ package com.moviestore.service;
 
 import org.springframework.stereotype.Service;
 
+import com.moviestore.controller.form.UserForm;
 import com.moviestore.error.ServiceException;
-import com.moviestore.form.UserForm;
 import com.moviestore.model.User;
 import com.moviestore.repository.UserRepository;
 

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.moviestore.controller.dto.MovieDto;
+import com.moviestore.controller.form.UserForm;
 import com.moviestore.error.ServiceException;
-import com.moviestore.form.UserForm;
 import com.moviestore.model.Movie;
 import com.moviestore.model.Rent;
 import com.moviestore.model.Status;
