@@ -51,17 +51,7 @@ public class User {//implements GrantedAuthority {
 		this.email = email;
 		this.password = password;
 	}
-
-	public User(Long id, @NotBlank(message = "Required name field.") String name,
-			@NotBlank(message = "Required e-mail field.") String email,
-			@NotBlank(message = "Required password field.") String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}

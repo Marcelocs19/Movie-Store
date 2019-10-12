@@ -25,13 +25,14 @@ public class Instantiation implements CommandLineRunner {
 
 		userRepository.deleteAll();
 
-		User user1 = new User(1L, "testeA@gmail.com", "testA", "1234");
-		User user2 = new User(2L, "testeB@gmail.com", "testB", "1234");
-		User user3 = new User(3L, "testeC@gmail.com", "testC", "1234");
-		User user4 = new User(4L, "testeD@gmail.com", "testD", "1234");
-		User user5 = new User(5L, "testeE@gmail.com", "testE", "1234");
+		User user1 = new User( "testeA@gmail.com", "testA", "1234");
+		User user2 = new User( "testeB@gmail.com", "testB", "1234");
+		User user3 = new User( "testeC@gmail.com", "testC", "1234");
+		User user4 = new User( "testeD@gmail.com", "testD", "1234");
+		User user5 = new User( "testeE@gmail.com", "testE", "1234");
+		User user6 = new User( "test@gmail.com", "test", "1234");
 
-		userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
+		userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5,user6));
 		
 		movieRepository.deleteAll();
 		
