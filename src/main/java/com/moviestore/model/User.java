@@ -61,7 +61,6 @@ public class User implements UserDetails {
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		//this.password = new BCryptPasswordEncoder().encode(password);
 	}
 		
 	public Long getId() {
