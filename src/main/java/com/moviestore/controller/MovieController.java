@@ -65,9 +65,9 @@ public class MovieController {
 	
 	@PutMapping(RENTMOVIE)
 	@Transactional
-	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable Long id, @RequestBody UserForm userForm) throws Exception {
+	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable(name = "id") Long id_movie, @RequestBody UserForm userForm) throws Exception {
 		try {
-			List<MovieDto> rentMovie = movieService.rentMovie(id,userForm);
+			List<MovieDto> rentMovie = movieService.rentMovie(id_movie,userForm);
 			if (rentMovie.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}					
@@ -80,9 +80,9 @@ public class MovieController {
 
 	@PutMapping(RETURNMOVIE)
 	@Transactional
-	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable Long id, @RequestBody UserForm userForm) throws Exception {
+	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long id_rent, @RequestBody UserForm userForm) throws Exception {
 		try {
-			List<MovieDto> returnMovie = movieService.returnMovie(id,userForm);
+			List<MovieDto> returnMovie = movieService.returnMovie(id_rent,userForm);
 			if (returnMovie.isEmpty()) {
 				return ResponseEntity.notFound().build();				
 			}			

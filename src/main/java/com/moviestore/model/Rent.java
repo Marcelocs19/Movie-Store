@@ -20,7 +20,7 @@ public class Rent extends BaseEntity {
 	
 	@ManyToOne
 	@NotNull(message = "At least one movie required.")
-	private Movie movies;
+	private Movie movie;
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -31,10 +31,10 @@ public class Rent extends BaseEntity {
 		
 	}	
 
-	public Rent(User user, @NotNull(message = "At least one movie required.") Movie movies, Status status) {
+	public Rent(User user, @NotNull(message = "At least one movie required.") Movie movie, Status status) {
 		super();
 		this.user = user;
-		this.movies = movies;
+		this.movie = movie;
 		this.status = status;
 	}
 
@@ -46,12 +46,12 @@ public class Rent extends BaseEntity {
 		this.user = user;
 	}
 
-	public Movie getMovies() {
-		return movies;
+	public Movie getMovie() {
+		return movie;
 	}
 
-	public void setMovies(Movie movie) {
-		this.movies = movie;
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 
 	public Status getStatus() {

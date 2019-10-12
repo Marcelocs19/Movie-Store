@@ -79,6 +79,14 @@ public class User {//implements GrantedAuthority {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+		
+	public List<Rent> getRented() {
+		return rented;
+	}
+
+	public void setRented(List<Rent> rented) {
+		this.rented = rented;
+	}
 
 	@Override
 	public String toString() {
