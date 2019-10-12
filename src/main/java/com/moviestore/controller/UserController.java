@@ -20,6 +20,10 @@ import com.moviestore.service.UserService;
 @RequestMapping("/users")
 public class UserController {
 
+	private static final String ERROR_CREATE_USER = "Error creating a user.";
+	
+	private static final String PATH_ID = "/{id}";
+	
 	private final UserService userService;
 
 	public UserController(UserService userService) {
@@ -33,10 +37,10 @@ public class UserController {
 			throws Exception {
 		try {
 			User user = userService.createNewUser(userForm);
-			URI uri = uriBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
+			URI uri = uriBuilder.path(PATH_ID).buildAndExpand(user.getId()).toUri();
 			return ResponseEntity.created(uri).body(new UserDto(user));
 		} catch (Exception e) {
-			throw new Exception("Error");
+			throw new Exception(ERROR_CREATE_USER);
 		}
 	}
 

@@ -28,28 +28,24 @@ public class Movie extends BaseEntity {
 	@Column(name = "director_name", length = 100, nullable = false)
 	private String director_name;
 	
+	@Column(name = "available",nullable = false)
+	private boolean available;
 				
 	public Movie() {
 		super();
 	}
 
 	public Movie(@NotBlank(message = "Required title field.") String title, @Min(0) int totalAmount,
-			@Min(0) int currentQuantity, @NotBlank(message = "Required title field.") String director_name) {
+			@Min(0) int currentQuantity, @NotBlank(message = "Required name of director field.") String director_name,
+			boolean available) {
 		super();
 		this.title = title;
 		this.totalAmount = totalAmount;
 		this.currentQuantity = currentQuantity;
 		this.director_name = director_name;
+		this.available = available;
 	}
-
-	public String getDirector_name() {
-		return director_name;
-	}
-
-	public void setdirector_name(String director_name) {
-		this.director_name = director_name;
-	}
-
+		
 	public String getTitle() {
 		return title;
 	}
@@ -74,10 +70,28 @@ public class Movie extends BaseEntity {
 		this.currentQuantity = currentQuantity;
 	}
 
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+	
+	public String getDirector_name() {
+		return director_name;
+	}
+
+	public void setDirector_name(String director_name) {
+		this.director_name = director_name;
+	}
+	
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", totalAmount=" + totalAmount + ", currentQuantity=" + currentQuantity
-				+ ", director_name=" + director_name + "]";
-	}	
+				+ ", director_name=" + director_name + ", available=" + available + "]";
+	}
+
+
 	
 }
