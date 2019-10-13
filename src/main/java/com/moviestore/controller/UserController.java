@@ -3,6 +3,7 @@ package com.moviestore.controller;
 import java.net.URI;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,6 @@ import com.moviestore.service.UserService;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
-	private static final String ERROR_CREATE_USER = "Error creating a user.";
 	
 	private static final String PATH_ID = "/{id}";
 	
@@ -33,15 +32,10 @@ public class UserController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<UserDto> createNewUser(@RequestBody UserForm userForm, UriComponentsBuilder uriBuilder)
-			throws Exception {
-		try {
+	public ResponseEntity<UserDto> createNewUser(@RequestBody @Valid UserForm userForm, UriComponentsBuilder uriBuilder){
 			User user = userService.createNewUser(userForm);
 			URI uri = uriBuilder.path(PATH_ID).buildAndExpand(user.getId()).toUri();
-			return ResponseEntity.created(uri).body(new UserDto(user));
-		} catch (Exception e) {
-			throw new Exception(ERROR_CREATE_USER);
-		}
+			return ResponseEntity.created(uri).body(new UserDto(user));		
 	}
 
 }
