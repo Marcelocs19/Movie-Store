@@ -22,8 +22,8 @@ public class MovieDto {
 	}
 
 	public MovieDto(Rent rent) {
-		this.id = rent.getMovies().getId();
-		this.title = rent.getMovies().getTitle();
+		this.id = rent.getMovie().getId();
+		this.title = rent.getMovie().getTitle();
 	}
 			
 	public Long getId() {

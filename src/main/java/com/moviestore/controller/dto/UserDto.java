@@ -18,7 +18,5 @@ public class UserDto {
 	public String getName() {
 		return name;
 	}
-	
-	
-	
+		
 }

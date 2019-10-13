@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.moviestore.controller.dto.UserDto;
-import com.moviestore.form.UserForm;
+import com.moviestore.controller.form.UserForm;
 import com.moviestore.model.User;
 import com.moviestore.service.UserService;
 
