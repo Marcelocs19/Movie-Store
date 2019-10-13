@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,44 +21,35 @@ import com.moviestore.service.RentService;
 @RestController
 @RequestMapping("/rent")
 public class RentController {
-
-	private static final String ERROR_RENT_MOVIES = "Error when renting the movie.";
-	private static final String ERROR_RETURN_MOVIES = "Error returning movie.";
 	
 	private static final String RENTMOVIE = "/{id}";
 	private static final String RETURNMOVIE = "/return/{id}";
-	
+
 	@Autowired
 	private RentService rentService;
-	
+
 	@PutMapping(RENTMOVIE)
 	@Transactional
-	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable Long id, @RequestBody UserForm userForm,HttpServletRequest request) throws Exception {
-		try {
-			List<MovieDto> rentMovie = rentService.rentMovie(id,userForm,request);
-			if (rentMovie.isEmpty()) {
-				return ResponseEntity.notFound().build();
-			}					
-			return ResponseEntity.ok(rentMovie);
-		} catch (Exception e) {
-			throw new Exception(ERROR_RENT_MOVIES);
+	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable Long id, @RequestBody @Valid UserForm userForm,
+			HttpServletRequest request) {
+		List<MovieDto> rentMovie = rentService.rentMovie(id, userForm, request);
+		if (rentMovie.isEmpty()) {
+			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(rentMovie);
 
 	}
 
 	@PutMapping(RETURNMOVIE)
 	@Transactional
-	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long id_rent, @RequestBody UserForm userForm,HttpServletRequest request) throws Exception {
-		try {
-			List<MovieDto> returnMovie = rentService.returnMovie(id_rent,userForm,request); 
-			if (returnMovie.isEmpty()) {
-				return ResponseEntity.notFound().build();				
-			}			
-			return ResponseEntity.ok(returnMovie);
-		} catch (Exception e) {
-			throw new Exception(ERROR_RETURN_MOVIES);
+	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long id_rent,
+			@RequestBody @Valid UserForm userForm, HttpServletRequest request) {
+		List<MovieDto> returnMovie = rentService.returnMovie(id_rent, userForm, request);
+		if (returnMovie.isEmpty()) {
+			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(returnMovie);
 
 	}
-	
+
 }
