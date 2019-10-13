@@ -2,6 +2,7 @@ package com.moviestore.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class RentController {
 	private static final String ERROR_RENT_MOVIES = "Error when renting the movie.";
 	private static final String ERROR_RETURN_MOVIES = "Error returning movie.";
 	
-	private static final String RENTMOVIE = "/rent/{id}";
+	private static final String RENTMOVIE = "/{id}";
 	private static final String RETURNMOVIE = "/return/{id}";
 	
 	@Autowired
@@ -31,9 +32,9 @@ public class RentController {
 	
 	@PutMapping(RENTMOVIE)
 	@Transactional
-	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable Long id, @RequestBody UserForm userForm) throws Exception {
+	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable Long id, @RequestBody UserForm userForm,HttpServletRequest request) throws Exception {
 		try {
-			List<MovieDto> rentMovie = rentService.rentMovie(id,userForm);
+			List<MovieDto> rentMovie = rentService.rentMovie(id,userForm,request);
 			if (rentMovie.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}					
@@ -46,9 +47,9 @@ public class RentController {
 
 	@PutMapping(RETURNMOVIE)
 	@Transactional
-	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long id_rent, @RequestBody UserForm userForm) throws Exception {
+	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long id_rent, @RequestBody UserForm userForm,HttpServletRequest request) throws Exception {
 		try {
-			List<MovieDto> returnMovie = rentService.returnMovie(id_rent,userForm); 
+			List<MovieDto> returnMovie = rentService.returnMovie(id_rent,userForm,request); 
 			if (returnMovie.isEmpty()) {
 				return ResponseEntity.notFound().build();				
 			}			
