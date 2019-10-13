@@ -42,14 +42,18 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers(HttpMethod.GET,"/movies").permitAll()
-		.antMatchers(HttpMethod.GET,"/movies/*").permitAll()
-		.antMatchers(HttpMethod.POST,"/login").permitAll()
-		.anyRequest().authenticated()
-		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new AuthenticationTokenFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class);		
+		http
+        .csrf().disable();	
+		http
+        .authorizeRequests()
+        	.antMatchers(HttpMethod.GET,"/movies").permitAll()
+        	.antMatchers(HttpMethod.GET,"/movies/*").permitAll()
+            .antMatchers(HttpMethod.POST,"/login").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and().addFilterBefore(new AuthenticationTokenFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class)
+        .logout().logoutUrl("/logout").invalidateHttpSession(true);
 	}
 	
 	@Override
