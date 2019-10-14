@@ -95,14 +95,11 @@ public class MovieControllerTest {
 		
 		movies.add(movieTest3);
 		
-		moviesDto = MovieDto.convertMoviesToDto(movies);
-		
-		moviesDtoSearch = MovieDto.convertMoviesToDto((Arrays.asList(movieTest1)));
-		
 	}
 	
 	@Test
 	public void testListAvailableMoviesSucess() throws Exception {
+		moviesDto.addAll(MovieDto.convertMoviesToDto(movies));
 		given(this.movieServices.listAllAvailableMovies()).willReturn(moviesDto);
 		mockMvc.perform(get(PATH_LIST_AVAILABLE_MOVIES)
 				.accept(MediaType.APPLICATION_JSON))
@@ -117,6 +114,7 @@ public class MovieControllerTest {
 	
 	@Test
 	public void testSearchMovieSucess() throws Exception {
+		moviesDtoSearch.addAll(MovieDto.convertMoviesToDto((Arrays.asList(movieTest1))));
 		given(this.movieServices.searchMovie("Titanic")).willReturn(moviesDtoSearch);
 		mockMvc.perform(post(PATH_SEARCH_MOVIES).param("title","Titanic")
 				.accept(MediaType.APPLICATION_JSON))
@@ -124,5 +122,23 @@ public class MovieControllerTest {
 				.andExpect(jsonPath("$.[0].id").value(TEST_ID_MOVIE1))
 				.andExpect(jsonPath("$.[0].title").value("Titanic"));
 	}
+	
+	@Test
+	public void testListAvailableMoviesNotFound() throws Exception {
+		moviesDto.clear();
+		given(this.movieServices.listAllAvailableMovies()).willReturn(moviesDto);
+		mockMvc.perform(get(PATH_LIST_AVAILABLE_MOVIES)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
 
+	@Test
+	public void testSearchMovieNotFound() throws Exception {
+		moviesDtoSearch.clear();
+		given(this.movieServices.searchMovie("Titanic")).willReturn(moviesDtoSearch);
+		mockMvc.perform(post(PATH_SEARCH_MOVIES).param("title","Titanic")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
 }
