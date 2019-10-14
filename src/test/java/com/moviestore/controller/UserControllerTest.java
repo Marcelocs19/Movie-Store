@@ -43,4 +43,18 @@ public class UserControllerTest {
 				.andExpect(status().isCreated());
 	}
 	
+	@Test
+	public void testCreateUserError() throws Exception {
+		UserForm newUser = new UserForm();	
+		newUser.setEmail("allan@gmail.com");
+		newUser.setName(null);
+		newUser.setPassword("abcd");
+		ObjectMapper mapper = new ObjectMapper();
+		String newUserAsJSON = mapper.writeValueAsString(newUser);
+		mockMvc.perform(post(PATH_CREATE_NEW_USER)
+				.content(newUserAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
+				.contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isBadRequest());
+	}
+	
 }
