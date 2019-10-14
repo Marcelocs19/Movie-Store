@@ -3,7 +3,6 @@ package com.moviestore.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -56,8 +55,8 @@ public class RentController {
 	@PutMapping(RETURN_MOVIE)
 	@Transactional
 	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long idRent,
-			@RequestBody @Valid UserForm userForm, HttpServletRequest request) {
-		List<MovieDto> returnMovie = rentService.returnMovie(idRent, userForm, request);
+			@RequestBody @Valid UserForm userForm) {
+		List<MovieDto> returnMovie = rentService.returnMovie(idRent, userForm);
 		if (returnMovie.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
