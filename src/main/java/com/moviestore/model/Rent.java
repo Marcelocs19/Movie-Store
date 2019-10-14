@@ -2,6 +2,7 @@ package com.moviestore.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,9 +18,9 @@ public class Rent extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@NotNull(message = "At least one user required.")
-	@ManyToOne	 
-	@JoinColumn(name = "user",nullable = false)
+	//@NotNull(message = "At least one user required.")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "user")
 	private User user;
 	
 	@ManyToOne

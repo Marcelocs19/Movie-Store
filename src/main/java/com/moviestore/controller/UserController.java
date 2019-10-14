@@ -40,9 +40,10 @@ public class UserController {
 		HttpHeaders headers = new HttpHeaders();
 		if (!bindingResult.hasErrors()) {
 			User user = userService.createNewUser(userForm);
+			UserDto userDto = new UserDto(user);
 			URI uri = uriBuilder.path(PATH_ID).buildAndExpand(user.getId()).toUri();
 			headers.setLocation(uri);
-			return new ResponseEntity<UserDto>(headers,HttpStatus.CREATED);
+			return new ResponseEntity<UserDto>(userDto,headers,HttpStatus.CREATED);
 		}else {
 			return new ResponseEntity<UserDto>(headers,HttpStatus.BAD_REQUEST);
 		}

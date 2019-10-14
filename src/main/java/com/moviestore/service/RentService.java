@@ -36,25 +36,20 @@ public class RentService {
 	@Autowired
 	private TokenService tokenService;
 
-	public List<MovieDto> rentMovie(Long id, UserForm userForm, HttpServletRequest request) {
-		AuthenticationTokenFilter aux = new AuthenticationTokenFilter(tokenService, userRepository);
-		String token = aux.restoreToken(request);
-		Long idUser = tokenService.getIdUser(token);
+	public List<MovieDto> rentMovie(Long id, UserForm userForm) {
+
 		Optional<Movie> movie = movieRepository.findById(id);
 		if (movie.isPresent()) {
 			if (movie.get().getCurrentQuantity() == 0) {
 				movie.get().setAvailable(false);
 			} else {
-				Optional<User> userToken = userRepository.findById(idUser);
 				Optional<User> user = userRepository.findByEmail(userForm.getEmail());
-				if (userToken.get().getId() == user.get().getId()) {
-					List<Rent> listRent = rentRepository.findByMovie_idAndStatusAndUser_Email(id, Status.RENTED,
-							user.get().getEmail());
-					if (listRent.isEmpty()) {
-						movie.get().setCurrentQuantity(movie.get().getCurrentQuantity() - 1);
-						Rent rent = new Rent(user.get(), movie.get(), Status.RENTED);
-						rentRepository.saveAndFlush(rent);
-					}
+				List<Rent> listRent = rentRepository.findByMovie_idAndStatusAndUser_Email(id, Status.RENTED,
+						user.get().getEmail());
+				if (listRent.isEmpty()) {
+					movie.get().setCurrentQuantity(movie.get().getCurrentQuantity() - 1);
+					Rent rent = new Rent(user.get(), movie.get(), Status.RENTED);
+					rentRepository.saveAndFlush(rent);
 				}
 			}
 		}

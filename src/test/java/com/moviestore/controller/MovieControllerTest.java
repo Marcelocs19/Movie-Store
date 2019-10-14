@@ -33,13 +33,8 @@ import com.moviestore.service.MovieService;
 @AutoConfigureMockMvc
 public class MovieControllerTest {
 	
-	private static final Long TEST_ID_MOVIE1 = 1L;
-	private static final Long TEST_ID_MOVIE2 = 2L;
-	private static final Long TEST_ID_MOVIE3 = 3L;
-	
 	private static final String PATH_LIST_AVAILABLE_MOVIES = "/movies";
-	private static final String PATH_SEARCH_MOVIES = "/movies/search";
-	
+	private static final String PATH_SEARCH_MOVIES = "/movies/search";	
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -47,7 +42,10 @@ public class MovieControllerTest {
 	@MockBean
 	private MovieService movieServices;
 	
-			
+	private static final Long TEST_ID_MOVIE1 = 1L;
+	private static final Long TEST_ID_MOVIE2 = 2L;
+	private static final Long TEST_ID_MOVIE3 = 3L;
+	
 	private Movie movieTest1;
 	private Movie movieTest2;
 	private Movie movieTest3;
