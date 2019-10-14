@@ -3,6 +3,7 @@ package com.moviestore.controller;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -101,19 +102,27 @@ public class MovieControllerTest {
 	}
 	
 	@Test
-	public void testListAvailableMovies() throws Exception {
+	public void testListAvailableMoviesSucess() throws Exception {
 		given(this.movieServices.listAllAvailableMovies()).willReturn(moviesDto);
 		mockMvc.perform(get(PATH_LIST_AVAILABLE_MOVIES)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].id").value(TEST_ID_MOVIE1))
+				.andExpect(jsonPath("$.[0].title").value("Titanic"))
+				.andExpect(jsonPath("$.[1].id").value(TEST_ID_MOVIE2))
+				.andExpect(jsonPath("$.[1].title").value("Iron Man"))
+				.andExpect(jsonPath("$.[2].id").value(TEST_ID_MOVIE3))
+				.andExpect(jsonPath("$.[2].title").value("V for Vendetta"));
 	}
 	
 	@Test
-	public void testSearchMovie() throws Exception {
+	public void testSearchMovieSucess() throws Exception {
 		given(this.movieServices.searchMovie("Titanic")).willReturn(moviesDtoSearch);
 		mockMvc.perform(post(PATH_SEARCH_MOVIES).param("title","Titanic")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].id").value(TEST_ID_MOVIE1))
+				.andExpect(jsonPath("$.[0].title").value("Titanic"));
 	}
 
 }
