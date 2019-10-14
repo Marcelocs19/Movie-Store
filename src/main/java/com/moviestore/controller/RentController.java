@@ -1,6 +1,5 @@
 package com.moviestore.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.moviestore.controller.dto.MovieDto;
 import com.moviestore.controller.form.UserForm;
-import com.moviestore.service.MovieService;
 import com.moviestore.service.RentService;
 
 @RestController
@@ -30,21 +28,16 @@ public class RentController {
 	@Autowired
 	private RentService rentService;
 	
-	@Autowired
-	private MovieService movieService;
-
 	@PutMapping(RENT_MOVIE)
 	@Transactional
 	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable(name = "id") Long idMovie,
 			@RequestBody @Valid UserForm userForm, BindingResult bindingResult) {
 
-		List<MovieDto>	rentMovie = new ArrayList<>();
 		if (!bindingResult.hasErrors()) {
-			 rentMovie = rentService.rentMovie(idMovie, userForm);
+			List<MovieDto> rentMovie = rentService.rentMovie(idMovie, userForm);
 			if (!rentMovie.isEmpty()) {				
 				return ResponseEntity.ok(rentMovie);
 			}else {
-				rentMovie = movieService.listAllAvailableMovies();
 				return ResponseEntity.notFound().build();
 			}
 		} else {

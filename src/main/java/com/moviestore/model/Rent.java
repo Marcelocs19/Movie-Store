@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 public class Rent extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
 	
 	//@NotNull(message = "At least one user required.")
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -47,7 +48,6 @@ public class Rent extends BaseEntity {
 		this.movie = movie;
 		this.status = status;
 	}
-
 
 	public User getUser() {
 		return user;
