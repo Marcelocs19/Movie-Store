@@ -1,6 +1,8 @@
 package com.moviestore.controller;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +10,21 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviestore.MovieStoreApplication;
 import com.moviestore.controller.dto.MovieDto;
+import com.moviestore.controller.form.UserForm;
 import com.moviestore.model.Movie;
 import com.moviestore.model.User;
 import com.moviestore.repository.UserRepository;
@@ -27,20 +32,24 @@ import com.moviestore.security.TokenService;
 import com.moviestore.service.MovieService;
 import com.moviestore.service.RentService;
 
+import jdk.jfr.ContentType;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MovieStoreApplication.class)
-@WithMockUser(roles = "admin")
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 @AutoConfigureMockMvc
 public class RentControllerTest {
 	
 	private static final String PATH_RENT_MOVIE = "/rent/";
 	private static final String PATH_RETURN_MOVIE = "/rent/return/";
 	
-	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@InjectMocks
+	private RentController rentController;
 	
 	@MockBean
 	private MovieService movieServices;
@@ -65,12 +74,14 @@ public class RentControllerTest {
 	private List<Movie> movies;
 	
 	private List<User> users;
-		
-	private List<MovieDto> moviesDto;
 
+	private List<MovieDto> moviesDto;
+	
 	
 	@Before
 	public void setup() {
+	
+		mockMvc = MockMvcBuilders.standaloneSetup(rentController).build();
 		
 		movies = new ArrayList<>();
 		
@@ -82,7 +93,7 @@ public class RentControllerTest {
 		userTest1.setEmail("allan@gmail.com");
 		userTest1.setName("Allan");
 		userTest1.setPassword("abcd");
-		
+				
 		users.add(userTest1);
 		
 		movieTest1 = new Movie();
@@ -105,41 +116,38 @@ public class RentControllerTest {
 		
 		movies.add(movieTest1);	
 		
+		
 	}
+	
 	@Test
 	public void testRentMovieSucess() throws Exception {
 		given(this.movieServices.listAllAvailableMovies()).willReturn(moviesDto);
 		given(this.userRepository.findAll()).willReturn(users);
-		
-	}
-	
-//	@Test
-//	public void testRentMovieSucess() throws Exception {
-//		given(this.movieServices.listAllAvailableMovies()).willReturn(moviesDto);
-//		given(this.userRepository.findAll()).willReturn(users);
-//		
+		//userRepository.save(userTest1);
 //		UserForm userForm = new UserForm();
 //		userForm.setEmail(userTest1.getEmail());
 //		userForm.setName(userTest1.getName());
 //		userForm.setPassword(userTest1.getPassword());
-//		ObjectMapper mapper = new ObjectMapper();
-//		String userFormAsJSON = mapper.writeValueAsString(userForm);
-//		
 //		LoginForm login = new LoginForm();
 //		login.setEmail(userTest1.getEmail());
 //		login.setPassword(userTest1.getPassword());
-//		UsernamePasswordAuthenticationToken userAuthenticationToken = login.convert();
-//		Authentication authentication = authenticationManager.authenticate(userAuthenticationToken);
-//		String token = tokenService.createToken(authentication);
-//		
-//		AuthenticationTokenFilter auth = new AuthenticationTokenFilter(tokenService,userRepository);
-//		auth.authenticationUser(token);
-//		
-//		mockMvc.perform(put("/rent/1")
-//				.content(userFormAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
-//				.contentType(MediaType.APPLICATION_JSON_VALUE))
-//				.andExpect(status().isOk());
-//	}
+//
+//		ObjectMapper mapper = new ObjectMapper();
+//		String userFormAsJSON = mapper.writeValueAsString(login);
+		
+		UserForm userForm = new UserForm();
+		userForm.setEmail(userTest1.getEmail());
+		userForm.setName(userTest1.getName());
+		userForm.setPassword(userTest1.getPassword());
+		ObjectMapper mapper = new ObjectMapper();
+		String userFormAsJSON = mapper.writeValueAsString(userForm);
+
+		mockMvc.perform(put("/rent/1")
+				.content(userFormAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
+				.contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk());
+	}
+
 	
 	
 	

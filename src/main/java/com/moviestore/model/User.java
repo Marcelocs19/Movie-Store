@@ -44,7 +44,7 @@ public class User implements UserDetails {
 	@Column(name = "password", nullable = false)
 	private String password;
 		
-	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Rent> rented  = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.EAGER)

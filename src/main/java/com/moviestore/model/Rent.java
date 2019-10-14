@@ -19,8 +19,8 @@ public class Rent extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	
-	//@NotNull(message = "At least one user required.")
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@NotNull(message = "At least one user required.")
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user")
 	private User user;
 	

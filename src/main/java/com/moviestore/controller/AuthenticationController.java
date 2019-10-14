@@ -32,6 +32,7 @@ public class AuthenticationController {
 		UsernamePasswordAuthenticationToken user = login.convert();		
 		try {
 			Authentication authentication = authenticationManager.authenticate(user);
+			System.out.println("AUTENTICACAO2: "+authentication.toString());
 			String token = tokenService.createToken(authentication);
 			return ResponseEntity.ok(new TokenDto(token,"Bearer"));
 		} catch(AuthenticationException e) {
