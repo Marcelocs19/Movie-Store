@@ -54,7 +54,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().addFilterBefore(new AuthenticationTokenFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class)
-        .logout().logoutUrl("/logout").invalidateHttpSession(true);
+        .logout().logoutSuccessUrl("/movies").permitAll();
 	}
 	
 	@Override
