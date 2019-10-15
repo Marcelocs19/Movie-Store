@@ -15,10 +15,18 @@ To get started you can clone this repository using git:
 git clone https://github.com/Marcelocs19/Movie-Store.git
 ```
 ### MySQL
+```
 1. create database movie_store;
+```
+```
 2. create user 'usertest'@'%' identified by '123456';
+```
+```
 3. grant all on movie_store.* to 'usertest'@'%';
+```
+```
 4. use movie_store;
+```
 
 ### Running the application locally
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the main method in the MovieStoreApplication class from your IDE.
