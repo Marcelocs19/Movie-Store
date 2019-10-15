@@ -7,9 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.moviestore.model.Movie;
-import com.moviestore.model.User;
 import com.moviestore.repository.MovieRepository;
-import com.moviestore.repository.UserRepository;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -17,27 +15,8 @@ public class Instantiation implements CommandLineRunner {
 	@Autowired
 	private MovieRepository movieRepository;
 
-	@Autowired
-	private UserRepository userRepository;
-
 	@Override
 	public void run(String... args) throws Exception {
-
-		userRepository.deleteAll();
-
-		//new User(name,email,password(hash = "1234"))
-		User user1 = new User("userMaria", "maria@gmail.com",
-				"$2a$10$ThN1p9Y1VrM3RvcPBkT1qeWCqsegZGrWNdnsK1CLYOUjSf5iELlWm");
-		User user2 = new User("userPaul", "paulB@gmail.com",
-				"$2a$10$ThN1p9Y1VrM3RvcPBkT1qeWCqsegZGrWNdnsK1CLYOUjSf5iELlWm");
-		User user3 = new User("userBob", "bob@gmail.com",
-				"$2a$10$ThN1p9Y1VrM3RvcPBkT1qeWCqsegZGrWNdnsK1CLYOUjSf5iELlWm");
-		User user4 = new User("userJohn", "johnD@gmail.com",
-				"$2a$10$ThN1p9Y1VrM3RvcPBkT1qeWCqsegZGrWNdnsK1CLYOUjSf5iELlWm");
-		User user5 = new User("userAriel", "arial@gmail.com",
-				"$2a$10$ThN1p9Y1VrM3RvcPBkT1qeWCqsegZGrWNdnsK1CLYOUjSf5iELlWm");
-
-		userRepository.saveAll(Arrays.asList(user1,user2,user3,user4,user5));
 
 		movieRepository.deleteAll();
 
