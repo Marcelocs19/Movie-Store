@@ -44,7 +44,7 @@ public class User implements UserDetails {
 	@Column(name = "password", nullable = false)
 	private String password;
 		
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Rent> rented  = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -76,7 +76,7 @@ public class User implements UserDetails {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.trim();
 	}
 
 	public String getEmail() {

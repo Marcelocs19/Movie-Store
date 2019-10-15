@@ -47,14 +47,14 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 		http
         .authorizeRequests()
         	.antMatchers(HttpMethod.GET,"/movies").permitAll()
-        	.antMatchers(HttpMethod.GET,"/movies/*").permitAll()
+        	.antMatchers(HttpMethod.POST,"/movies/*").permitAll()
         	.antMatchers(HttpMethod.POST,"/users").permitAll()
             .antMatchers(HttpMethod.POST,"/login").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().addFilterBefore(new AuthenticationTokenFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class)
-        .logout().logoutUrl("/logout").invalidateHttpSession(true);
+        .logout().logoutSuccessUrl("/movies").permitAll();
 	}
 	
 	@Override

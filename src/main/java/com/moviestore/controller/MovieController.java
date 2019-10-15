@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,7 @@ public class MovieController {
 
 	}
 
-	@GetMapping(SEARCH)
+	@PostMapping(SEARCH)
 	public ResponseEntity<List<MovieDto>> searchMovies(@RequestParam("title") String title) {
 		List<MovieDto> listSearchMovies = movieService.searchMovie(title);
 		if (listSearchMovies.isEmpty()) {

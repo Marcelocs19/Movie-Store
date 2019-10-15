@@ -1,4 +1,4 @@
-package com.moviestore.controller.dto;
+package com.moviestore.error;
 
 public class ErrorValidationDto {
 

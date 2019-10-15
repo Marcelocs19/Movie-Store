@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.moviestore.controller.dto.ErrorValidationDto;
-
 @RestControllerAdvice
 public class ErrorValidationHandler {
 	
@@ -23,7 +21,7 @@ public class ErrorValidationHandler {
 	
 	
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(value =  {MethodArgumentNotValidException.class,IllegalArgumentException.class})
+	@ExceptionHandler(value =  {MethodArgumentNotValidException.class,IllegalArgumentException.class,NullPointerException.class})
 	public List<ErrorValidationDto> handle(MethodArgumentNotValidException exception) {
 		List<ErrorValidationDto> listErrorValidationDto = new ArrayList<>();
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();

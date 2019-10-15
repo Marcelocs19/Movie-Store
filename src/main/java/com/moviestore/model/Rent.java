@@ -2,6 +2,7 @@ package com.moviestore.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,10 +17,11 @@ import javax.validation.constraints.NotNull;
 public class Rent extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
 	
 	@NotNull(message = "At least one user required.")
-	@ManyToOne	 
-	@JoinColumn(name = "user",nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user")
 	private User user;
 	
 	@ManyToOne
@@ -46,7 +48,6 @@ public class Rent extends BaseEntity {
 		this.movie = movie;
 		this.status = status;
 	}
-
 
 	public User getUser() {
 		return user;
@@ -91,8 +92,10 @@ public class Rent extends BaseEntity {
 	@Override
 	public String toString() {
 		return "Rent [user=" + user + ", movie=" + movie + ", status=" + status + ", date_rent=" + date_rent
-				+ ", date_return=" + date_return + "]";
+				+ ", date_return=" + date_return + ", getId()=" + getId() + "]";
 	}
+
+	
 
 		
 }
