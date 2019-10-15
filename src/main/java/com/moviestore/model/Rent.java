@@ -92,8 +92,10 @@ public class Rent extends BaseEntity {
 	@Override
 	public String toString() {
 		return "Rent [user=" + user + ", movie=" + movie + ", status=" + status + ", date_rent=" + date_rent
-				+ ", date_return=" + date_return + "]";
+				+ ", date_return=" + date_return + ", getId()=" + getId() + "]";
 	}
+
+	
 
 		
 }

@@ -77,7 +77,7 @@ public class MovieControllerTest {
 		movieTest2.setTotalAmount(3);
 		movieTest2.setCurrentQuantity(3);
 		movieTest2.setDirector_name("Jon Favreau");
-		movieTest2.setTitle("Iron Man");
+		movieTest2.setTitle("V for Vendetta");
 				
 		movies.add(movieTest2);
 		
@@ -103,13 +103,13 @@ public class MovieControllerTest {
 				.andExpect(jsonPath("$.[0].id").value(TEST_ID_MOVIE1))
 				.andExpect(jsonPath("$.[0].title").value("Titanic"))
 				.andExpect(jsonPath("$.[1].id").value(TEST_ID_MOVIE2))
-				.andExpect(jsonPath("$.[1].title").value("Iron Man"))
+				.andExpect(jsonPath("$.[1].title").value("V for Vendetta"))
 				.andExpect(jsonPath("$.[2].id").value(TEST_ID_MOVIE3))
 				.andExpect(jsonPath("$.[2].title").value("V for Vendetta"));
 	}
 	
 	@Test
-	public void testSearchMovieSucess() throws Exception {
+	public void testSearchMovie1Sucess() throws Exception {
 		moviesDtoSearch.addAll(MovieDto.convertMoviesToDto((Arrays.asList(movieTest1))));
 		given(this.movieServices.searchMovie("Titanic")).willReturn(moviesDtoSearch);
 		mockMvc.perform(post(PATH_SEARCH_MOVIES).param("title","Titanic")
@@ -117,6 +117,20 @@ public class MovieControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.[0].id").value(TEST_ID_MOVIE1))
 				.andExpect(jsonPath("$.[0].title").value("Titanic"));
+	}
+	
+	@Test
+	public void testSearchMovie2Sucess() throws Exception {
+		moviesDtoSearch.clear();
+		moviesDtoSearch.addAll(MovieDto.convertMoviesToDto((Arrays.asList(movieTest2,movieTest3))));
+		given(this.movieServices.searchMovie("V for Vendetta")).willReturn(moviesDtoSearch);
+		mockMvc.perform(post(PATH_SEARCH_MOVIES).param("title","V for Vendetta")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].id").value(TEST_ID_MOVIE2))
+				.andExpect(jsonPath("$.[0].title").value("V for Vendetta"))
+				.andExpect(jsonPath("$.[1].id").value(TEST_ID_MOVIE3))
+				.andExpect(jsonPath("$.[1].title").value("V for Vendetta"));
 	}
 	
 	@Test
@@ -128,6 +142,16 @@ public class MovieControllerTest {
 				.andExpect(status().isNotFound());
 	}
 
+	
+	@Test
+	public void testSearchMovieErrorField() throws Exception {
+		moviesDtoSearch.clear();
+		given(this.movieServices.searchMovie("Titanic")).willReturn(moviesDtoSearch);
+		mockMvc.perform(post(PATH_SEARCH_MOVIES).param("title"," ")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+	
 	@Test
 	public void testSearchMovieNotFound() throws Exception {
 		moviesDtoSearch.clear();

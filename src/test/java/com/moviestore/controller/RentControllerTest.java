@@ -1,7 +1,7 @@
 package com.moviestore.controller;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -26,13 +26,14 @@ import com.moviestore.MovieStoreApplication;
 import com.moviestore.controller.dto.MovieDto;
 import com.moviestore.controller.form.UserForm;
 import com.moviestore.model.Movie;
+import com.moviestore.model.Rent;
+import com.moviestore.model.Status;
 import com.moviestore.model.User;
+import com.moviestore.repository.RentRepository;
 import com.moviestore.repository.UserRepository;
 import com.moviestore.security.TokenService;
 import com.moviestore.service.MovieService;
 import com.moviestore.service.RentService;
-
-import jdk.jfr.ContentType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MovieStoreApplication.class)
@@ -63,6 +64,9 @@ public class RentControllerTest {
 	@MockBean
 	private UserRepository userRepository;
 	
+	@MockBean
+	private RentRepository rentRepository;
+	
 	private static final Long TEST_ID_MOVIE1 = 1L;
 	private static final Long TEST_ID_MOVIE2 = 2L;
 	
@@ -77,6 +81,10 @@ public class RentControllerTest {
 
 	private List<MovieDto> moviesDto;
 	
+	private List<Rent> rents;
+	
+	private Rent rent;
+	
 	
 	@Before
 	public void setup() {
@@ -87,12 +95,16 @@ public class RentControllerTest {
 		
 		users = new ArrayList<>();
 		
+		rents = new ArrayList<>();
+		
 		moviesDto = new ArrayList<>();
 				
 		userTest1 = new User();
+		userTest1.setId(3L);
 		userTest1.setEmail("allan@gmail.com");
 		userTest1.setName("Allan");
 		userTest1.setPassword("abcd");
+		userTest1.isEnabled();
 				
 		users.add(userTest1);
 		
@@ -100,7 +112,7 @@ public class RentControllerTest {
 		movieTest1.setId(TEST_ID_MOVIE1);
 		movieTest1.setAvailable(true);
 		movieTest1.setTotalAmount(3);
-		movieTest1.setCurrentQuantity(3);
+		movieTest1.setCurrentQuantity(2);
 		movieTest1.setDirector_name("James Cameron");
 		movieTest1.setTitle("Titanic");
 		
@@ -116,6 +128,13 @@ public class RentControllerTest {
 		
 		movies.add(movieTest1);	
 		
+		rent = new Rent();
+		rent.setId(4L);
+		rent.setUser(userTest1);
+		rent.setMovie(movieTest1);
+		rent.setStatus(Status.RENTED);
+		
+		rents.add(rent);
 		
 	}
 	
@@ -123,31 +142,39 @@ public class RentControllerTest {
 	public void testRentMovieSucess() throws Exception {
 		given(this.movieServices.listAllAvailableMovies()).willReturn(moviesDto);
 		given(this.userRepository.findAll()).willReturn(users);
-		//userRepository.save(userTest1);
-//		UserForm userForm = new UserForm();
-//		userForm.setEmail(userTest1.getEmail());
-//		userForm.setName(userTest1.getName());
-//		userForm.setPassword(userTest1.getPassword());
-//		LoginForm login = new LoginForm();
-//		login.setEmail(userTest1.getEmail());
-//		login.setPassword(userTest1.getPassword());
-//
-//		ObjectMapper mapper = new ObjectMapper();
-//		String userFormAsJSON = mapper.writeValueAsString(login);
 		
 		UserForm userForm = new UserForm();
 		userForm.setEmail(userTest1.getEmail());
 		userForm.setName(userTest1.getName());
 		userForm.setPassword(userTest1.getPassword());
+		
 		ObjectMapper mapper = new ObjectMapper();
-		String userFormAsJSON = mapper.writeValueAsString(userForm);
-
-		mockMvc.perform(put("/rent/1")
-				.content(userFormAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
+		String token = mapper.writeValueAsString(userForm);
+		
+		mockMvc.perform(post("/rent/1")
+				.content(token).accept(MediaType.APPLICATION_JSON_VALUE)
 				.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk());
+		
 	}
 
+	@Test
+	public void testReturnMovieSucess() throws Exception {
+		given(this.rentRepository.findAll()).willReturn(rents);
+		UserForm userForm = new UserForm();
+		userForm.setEmail(userTest1.getEmail());
+		userForm.setName(userTest1.getName());
+		userForm.setPassword(userTest1.getPassword());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String token = mapper.writeValueAsString(userForm);
+		
+		this.mockMvc.perform(post("/rent/return/4")
+				.content(token).accept(MediaType.APPLICATION_JSON_VALUE)
+				.contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk());
+		
+	}
 	
 	
 	

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +28,7 @@ public class RentController {
 	@Autowired
 	private RentService rentService;
 	
-	@PutMapping(RENT_MOVIE)
+	@PostMapping(RENT_MOVIE)
 	@Transactional
 	public ResponseEntity<List<MovieDto>> rentMovie(@PathVariable(name = "id") Long idMovie,
 			@RequestBody @Valid UserForm userForm, BindingResult bindingResult) {
@@ -45,7 +45,7 @@ public class RentController {
 		}
 	}
 
-	@PutMapping(RETURN_MOVIE)
+	@PostMapping(RETURN_MOVIE)
 	@Transactional
 	public ResponseEntity<List<MovieDto>> returnMovie(@PathVariable(name = "id") Long idRent,
 			@RequestBody @Valid UserForm userForm) {
