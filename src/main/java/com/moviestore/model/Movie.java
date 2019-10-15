@@ -51,7 +51,7 @@ public class Movie extends BaseEntity {
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = title.trim();
 	}
 
 	public int getTotalAmount() {

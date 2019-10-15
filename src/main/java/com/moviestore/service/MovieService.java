@@ -19,7 +19,8 @@ public class MovieService {
 	}
 
 	public List<MovieDto> searchMovie(String title) {
-		return MovieDto.convertMoviesToDto(movieRepository.findByTitle(title));
+		String titleTrim = title.trim();
+		return MovieDto.convertMoviesToDto(movieRepository.findByTitle(titleTrim));
 	}
 
 }

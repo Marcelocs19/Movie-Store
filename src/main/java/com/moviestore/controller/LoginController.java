@@ -19,7 +19,7 @@ import com.moviestore.security.TokenService;
 
 @RestController
 @RequestMapping("/login")
-public class AuthenticationController {
+public class LoginController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;

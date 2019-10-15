@@ -7,11 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.moviestore.model.Movie;
-import com.moviestore.model.Rent;
-import com.moviestore.model.Status;
 import com.moviestore.model.User;
 import com.moviestore.repository.MovieRepository;
-import com.moviestore.repository.RentRepository;
 import com.moviestore.repository.UserRepository;
 
 @Configuration
@@ -22,9 +19,6 @@ public class Instantiation implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private RentRepository rentRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -55,16 +49,7 @@ public class Instantiation implements CommandLineRunner {
 		Movie movie6 = new Movie("The Lord of the Rings: The Two Towers", 5, 5, "Peter Jackson", true);
 
 		movieRepository.saveAll(Arrays.asList(movie1, movie2, movie3, movie4, movie5, movie6));
-//
-//		rentRepository.deleteAll();
-//
-//		Rent rent1 = new Rent(user1, movie4, Status.RENTED);
-//		Rent rent2 = new Rent(user1, movie7, Status.RENTED);
-//
-//		Rent rent3 = new Rent(user4, movie4, Status.RENTED);
-//		Rent rent4 = new Rent(user4, movie7, Status.RENTED);
-//
-//		rentRepository.saveAll(Arrays.asList(rent1, rent2, rent3, rent4));
+
 
 	}
 
