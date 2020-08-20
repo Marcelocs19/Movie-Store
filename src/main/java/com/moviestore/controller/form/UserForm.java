@@ -2,6 +2,7 @@ package com.moviestore.controller.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -15,6 +16,7 @@ public class UserForm {
 	private String password;
 	
 	@NotBlank(message = "Required name field.")
+	@Size(min = 1, max = 5, message = "Tamanho minímo {2} e tamanho maximo {1}")
 	private String name;
 		
 	public String getName() {

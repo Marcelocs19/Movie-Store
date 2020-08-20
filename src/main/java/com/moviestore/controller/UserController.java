@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+//import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,19 +35,19 @@ public class UserController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<UserDto> createNewUser(@RequestBody @Valid UserForm userForm, BindingResult bindingResult,
+	public ResponseEntity<UserDto> createNewUser(@RequestBody @Valid UserForm userForm, // BindingResult bindingResult,
 			UriComponentsBuilder uriBuilder) {
 		HttpHeaders headers = new HttpHeaders();
-		if (!bindingResult.hasErrors()) {
-			User user = userService.createNewUser(userForm);
-			UserDto userDto = new UserDto(user);
-			URI uri = uriBuilder.path(PATH_ID).buildAndExpand(user.getId()).toUri();
-			headers.setLocation(uri);
-			return new ResponseEntity<UserDto>(userDto,headers,HttpStatus.CREATED);
-		}else {
-			return new ResponseEntity<UserDto>(headers,HttpStatus.BAD_REQUEST);
-		}
-		
+		// if (!bindingResult.hasErrors()) {
+		User user = userService.createNewUser(userForm);
+		UserDto userDto = new UserDto(user);
+		URI uri = uriBuilder.path(PATH_ID).buildAndExpand(user.getId()).toUri();
+		headers.setLocation(uri);
+		return new ResponseEntity<UserDto>(userDto, headers, HttpStatus.CREATED);
+		// }else {
+		// return new ResponseEntity<UserDto>(headers,HttpStatus.BAD_REQUEST);
+		// }
+
 	}
 
 }
